@@ -1,16 +1,21 @@
-name: Uptime Check
+name: Check Site Uptime
 
 on:
   schedule:
-    - cron: '*/14 * * * *'  # Runs every 14 minutes
+    # Runs the check every 15 minutes (cron format: min hour day month day-of-week)
+    - cron: '*/15 * * * *'
 
 jobs:
-  ping_site:
+  check-uptime:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check the site
-        id: check
-        uses: srt32/uptime@master
+      - name: Check if site is up
+        uses: madrilene/http-status-action@v1.0.1 # A reusable GitHub Action for checking HTTP status
         with:
-          url-to-hit: "https://www.vegetablesking.in/"  # Replace with your website URL
-          expected-statuses: "200,301"  # Adjust based on expected responses
+          url: 'https://www.vegetablesking.in/' # Replace with your site's URL
+          expected-status: 200 # The expected status code for a successful request
+
+      - name: Notify if the site is down
+        if: failure()
+        run: echo "Your site is down! Please check immediately."
