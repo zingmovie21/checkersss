@@ -1,17 +1,22 @@
-name: Simple GitHub Actions Test
+name: Check Site Uptime
 
 on:
-  push:
-    branches:
-      - main # Triggers the workflow on push to the main branch
+  schedule:
+    # Runs the check every 15 minutes
+    - cron: '*/15 * * * *'
 
 jobs:
-  test-action:
+  check-uptime:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out the repository
-        uses: actions/checkout@v3
-
-      - name: Run a simple script
-        run: echo "Hello, GitHub Actions!"
+      - name: Check site status
+        run: |
+          # Replace with your website URL
+          URL="https://yourwebsite.com" 
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $URL)
+          echo "Status code: $STATUS"
+          if [ "$STATUS" -ne 200 ]; then
+            echo "Your site is down! Status code: $STATUS"
+            exit 1
+          fi
