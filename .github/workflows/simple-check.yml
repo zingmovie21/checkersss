@@ -1,0 +1,17 @@
+name: Simple GitHub Actions Test
+
+on:
+  push:
+    branches:
+      - main # Triggers the workflow on push to the main branch
+
+jobs:
+  test-action:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Run a simple script
+        run: echo "Hello, GitHub Actions!"
