@@ -13,7 +13,7 @@ jobs:
       - name: Check site status
         run: |
           # Replace with your website URL
-          URL="https://yourwebsite.com" 
+          URL="https://www.vegetablesking.in/" 
           STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $URL)
           echo "Status code: $STATUS"
           if [ "$STATUS" -ne 200 ]; then
