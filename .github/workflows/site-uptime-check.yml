@@ -4,7 +4,7 @@ on:
   schedule:
     # Runs the check every 15 minutes (cron format: min hour day month day-of-week)
     - cron: '*/15 * * * *'
-
+ 
 jobs:
   check-uptime:
     runs-on: ubuntu-latest
